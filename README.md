@@ -17,6 +17,8 @@ for ( size_t i = 0; i < 5; i++ ) {
 }
 */
 print(s);  // sum of 1, 2, 3, 4 and 5
+```
+```
 int p = 0;
 reps(i, 2, 5) {
     p += a[i];
@@ -28,7 +30,7 @@ for ( size_t i = 2; i < 5; i++ ) {
 */
 print(p)  // sum of 3, 4 and 5
 ```
-
+outputs:
 ```txt:rep_example_out
 15
 12
