@@ -77,7 +77,7 @@ print(a.size(), a.max(), a.min(), a.sum(), a.mean<double>());
 
 print();
 print("b(argsort of a)")
-auto b = a.argsort(ndarray_ptr<size_t, 10>(new size_t[12]).seq());
+auto b = a.argsort(ndarray_ptr<size_t, 10>(new size_t[10]).seq());
 print(b);
 b.del();  // delete b memory data !!! Don't forget freeing allocated memory
 
@@ -88,9 +88,9 @@ print(a.sort_asc());
 
 print();
 
-ndarray_ptr<int, 2, 3, 2> c(orig);
+ndarray_ptr<int, 2, 3, 2> c(orig);  // it's like int[2][3][2]
 c.fill(1);
-c(1, 2, 0) = 0;
+c(1, 2, 0) = 0;  // you can access through indices
 c(0, 1, 1) = 2;
 a[0] = 3;  // change using a
 c[6] = 4;
