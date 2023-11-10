@@ -16,9 +16,10 @@ for ( size_t i = 0; i < 5; i++ ) {
     s += a[i]:
 }
 */
+
 print(s);  // sum of 1, 2, 3, 4 and 5
-```
-```
+
+
 int p = 0;
 reps(i, 2, 5) {
     p += a[i];
@@ -28,6 +29,7 @@ for ( size_t i = 2; i < 5; i++ ) {
     s += a[i]:
 }
 */
+
 print(p)  // sum of 3, 4 and 5
 ```
 outputs:
@@ -35,8 +37,6 @@ outputs:
 15
 12
 ```
-
-
 
 
 ## print.hpp
@@ -61,6 +61,54 @@ The format is C's printf style like `"%5d"` (default:`%3d`).
 The format is C's printf style like `"%.2f"` (default:`%f`).
 
 
-## ubiq/ndarray\_ptr.hpp
+## ndarray\_ptr.hpp
+
+The header `ubiq/ndarray_ptr.hpp` offers the wrapper class `ndarray_ptr`.
+
+```cpp:rep_example.cpp
+int orig[12] = {3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 8};
+ndarray<int, 10> a(orig + 2); // give the start point pointer
+print = print.set_sep(", ");
+print(a);
+print(a[9], a[7]);
+print(a.size(), a.max(), a.min(), a.sum(), a.mean<double>());
+
+auto b = a.argsort(ndarray_ptr<size_t, 10>(new size_t[12]).seq());
+print(b)
+b.del()  // delete b memory data !!! Don't forget freeing allocated memory
+
+print("sort_dsc:", a.sort())
+print("sort_asc:", a.sort_asc())
+
+print()
+
+ndarray<int, 2, 3, 2> c(orig);
+c.fill(1);
+c(1, 2, 0) = 0;
+c(0, 1, 1) = 2;
+a[0] = 3;  // change using a
+c[6] = 4;
+
+print(c);
+print(a);
+```
+outputs:
+```txt:rep_example_out
+[  4,   1,   5,   9,   2,   6,   5,   3,   5,   8]
+  8,  3
+ 10,  9,  1,  48, 4.8
+[  3,   9,   5,   2,   6,   8,   0,   7,   4,   1]
+sort_dsc, [  9,   8,   6,   5,   5,   5,   3,   3,   2,   1]
+sort_asc, [  1,   2,   3,   3,   5,   5,   5,   6,   8,   9]
+
+[[[1, 1]
+  [3, 2]
+  [1, 1]]
+
+ [[4, 1]
+  [1, 1]
+  [0, 1]]]
+[  3,   2,   1,   1,   1,   1,   1,   1,   0,   1]
+```
 
 
