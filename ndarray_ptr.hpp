@@ -8,7 +8,7 @@
 #include "rep.hpp"
 
 
-#define JUNKANAI_NDARRAY_PTR_ARGUMENTS_ASSERT static_assert((I > 1) && (J > 0) && (K > 0) && (L > 0), "invalid arguments: I, J, K, L of ndarray_ptr.")
+#define JUNKANAI_NDARRAY_PTR_ARGUMENTS_ASSERT static_assert((I > 1) && (J > 0) && (K > 0) && (L > 0), "invalid arguments: I, J, K, L of ndarray_ptr.");
 
 template<class T, size_t I, size_t J = 1, size_t K = 1, size_t L = 1>
 class ndarray_ptr {
