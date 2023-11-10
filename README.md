@@ -67,10 +67,10 @@ The header `ubiq/ndarray_ptr.hpp` offers `ndarray_ptr`, wrapper class of pointer
 
 ```cpp:rep_example.cpp
 int orig[12] = {3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 8};
-ndarray<int, 10> a(orig + 2); // give the start point pointer
+ndarray_ptr<int, 10> a(orig + 2); // give the start point pointer
 print = print.set_sep(", ");
 
-print("a:")
+print("a:");
 print(a);
 print(a[9], a[7]);
 print(a.size(), a.max(), a.min(), a.sum(), a.mean<double>());
@@ -88,16 +88,16 @@ print(a.sort_asc());
 
 print();
 
-ndarray<int, 2, 3, 2> c(orig);
+ndarray_ptr<int, 2, 3, 2> c(orig);
 c.fill(1);
 c(1, 2, 0) = 0;
 c(0, 1, 1) = 2;
 a[0] = 3;  // change using a
 c[6] = 4;
 
-print("c:")
+print("c:");
 print(c);
-print("a:")
+print("a:");
 print(a);
 ```
 outputs:
@@ -125,5 +125,3 @@ c:
 a:
 [  3,   2,   1,   1,   1,   1,   1,   1,   0,   1]
 ```
-
-
