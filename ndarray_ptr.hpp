@@ -32,28 +32,29 @@ public:
 	template<size_t I2, size_t J2, size_t K2, size_t L2>
 	void operator=(ndarray_ptr<T, I2, J2, K2, L2>& other) { data_ = other.begin(); }
 
-	void fill(T t = 0) noexcept { rep(n, N) data_[n] = t; }
+	Self& fill(T t = 0) noexcept { rep(n, N) data_[n] = t; return *this; }
 
-	void seq(T step = 0, T start = 0) noexcept {
+	Self& seq(T step = 1, T start = 0) noexcept {
 		rep(n, N) {
 			data_[n] = start;
 			start += step;
 		}
+		return *this;
 	}
 
-	T *const begin() noexcept { return data_; }
+	T *const       begin() noexcept { return data_; }
 	const T *const begin() const noexcept { return data_; }
-	T *const end() noexcept { return data_+N; }
+	T *const       end() noexcept { return data_+N; }
 	const T *const end() const noexcept { return data_+N; }
-	T *const data() noexcept { return data_; }
+	T *const       data() noexcept { return data_; }
 	const T *const data() const noexcept { return data_; }
-	T *const data(ptrdiff_t diff) noexcept { return data_+diff; }
+	T *const       data(ptrdiff_t diff) noexcept { return data_+diff; }
 	const T *const data(ptrdiff_t diff) const noexcept { return data_+diff; }
 
 	T&       operator[](size_t i) noexcept { return data_[i]; }
 	const T& operator[](size_t i) const noexcept { return data_[i]; }
 
-	T& operator()(size_t i = 0, size_t j = 0, size_t k = 0, size_t l = 0) noexcept {
+	T&       operator()(size_t i = 0, size_t j = 0, size_t k = 0, size_t l = 0) noexcept {
 		if constexpr ( D == 4 ) return data_[i*(J*K*L) + j*(K*L) + k*L + l];
 		if constexpr ( D == 3 ) return data_[i*(J*K) + j*K + k];
 		if constexpr ( D == 2 ) return data_[i*J + j];
@@ -74,8 +75,8 @@ public:
 	static constexpr size_t zsize() { return D == 4 ? J : D == 3 ? I : 1; }
 	static constexpr size_t wsize() { return D == 4 ? I : 1; }
 
-	T max() const { return *std::max_element(begin(), end()); }
-	T min() const { return *std::min_element(begin(), end()); }
+	T      max() const { return *std::max_element(begin(), end()); }
+	T      min() const { return *std::min_element(begin(), end()); }
 	size_t argmax() const { return std::distance(begin(), std::max_element(begin(), end())); }
 	size_t argmin() const { return std::distance(begin(), std::min_element(begin(), end())); }
 
@@ -94,16 +95,16 @@ public:
 	Self& sort_asc() { std::sort(begin(), end()); return *this; } // asc
 
 	ndarray_ptr<size_t, I, J, K, L> argsort(ndarray_ptr<size_t, I, J, K, L>& indices) const {  // dsc
-		rep(n, N) indices[n] = n;
+		//rep(n, N) indices[n] = n;
 		std::sort(indices.begin(), indices.end(),
-				[this](T left, T right) -> bool { return data_[left] > data_[right]; });
+				[this](size_t left, size_t right) -> bool { return data_[left] > data_[right]; });
 		return indices;
 	}
 
 	ndarray_ptr<size_t, I, J, K, L> argsort_asc(ndarray_ptr<size_t, I, J, K, L>& indices) const {  // asc
 		rep(n, N) indices[n] = n;
 		std::sort(indices.begin(), indices.end(),
-				[this](T left, T right) -> bool { return data_[left] < data_[right]; });
+				[this](size_t left, size_t right) -> bool { return data_[left] < data_[right]; });
 		return indices;
 	}
 
@@ -115,11 +116,7 @@ public:
 	Self& operator*=(const Self& s) noexcept { rep(n, N) data_[n] *= s.data_[n]; return *this; }
 	Self& operator/=(T t) { rep(n, N) data_[n] /= t; return *this; }
 	Self& operator/=(const Self& s) { rep(n, N) data_[n] /= s.data_[n]; return *this; }
-
 };
-
-
-
 
 #endif  /* JUNKANAI_NDARRAY_PTR_HEADER */
 
