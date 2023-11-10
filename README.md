@@ -63,24 +63,30 @@ The format is C's printf style like `"%.2f"` (default:`%f`).
 
 ## ndarray\_ptr.hpp
 
-The header `ubiq/ndarray_ptr.hpp` offers the wrapper class `ndarray_ptr`.
+The header `ubiq/ndarray_ptr.hpp` offers `ndarray_ptr`, wrapper class of pointer.
 
 ```cpp:rep_example.cpp
 int orig[12] = {3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 8};
 ndarray<int, 10> a(orig + 2); // give the start point pointer
 print = print.set_sep(", ");
+
+print("a:")
 print(a);
 print(a[9], a[7]);
 print(a.size(), a.max(), a.min(), a.sum(), a.mean<double>());
 
+print();
+print("b(argsort of a)")
 auto b = a.argsort(ndarray_ptr<size_t, 10>(new size_t[12]).seq());
-print(b)
-b.del()  // delete b memory data !!! Don't forget freeing allocated memory
+print(b);
+b.del();  // delete b memory data !!! Don't forget freeing allocated memory
 
-print("sort_dsc:", a.sort())
-print("sort_asc:", a.sort_asc())
+print("sort_dsc:");
+print(a.sort());
+print("sort_asc:");
+print(a.sort_asc());
 
-print()
+print();
 
 ndarray<int, 2, 3, 2> c(orig);
 c.fill(1);
@@ -89,18 +95,26 @@ c(0, 1, 1) = 2;
 a[0] = 3;  // change using a
 c[6] = 4;
 
+print("c:")
 print(c);
+print("a:")
 print(a);
 ```
 outputs:
 ```txt:rep_example_out
+a:
 [  4,   1,   5,   9,   2,   6,   5,   3,   5,   8]
   8,  3
  10,  9,  1,  48, 4.8
-[  3,   9,   5,   2,   6,   8,   0,   7,   4,   1]
-sort_dsc, [  9,   8,   6,   5,   5,   5,   3,   3,   2,   1]
-sort_asc, [  1,   2,   3,   3,   5,   5,   5,   6,   8,   9]
 
+b(argsort of a):
+[  3,   9,   5,   2,   6,   8,   0,   7,   4,   1]
+sort_dsc:
+[  9,   8,   6,   5,   5,   5,   3,   3,   2,   1]
+sort_asc:
+[  1,   2,   3,   3,   5,   5,   5,   6,   8,   9]
+
+c:
 [[[1, 1]
   [3, 2]
   [1, 1]]
@@ -108,6 +122,7 @@ sort_asc, [  1,   2,   3,   3,   5,   5,   5,   6,   8,   9]
  [[4, 1]
   [1, 1]
   [0, 1]]]
+a:
 [  3,   2,   1,   1,   1,   1,   1,   1,   0,   1]
 ```
 
