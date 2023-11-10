@@ -1,4 +1,6 @@
 #pragma once
 
-#define rep(i, n) for ( int i = 0; i < (int)(n); ++i )
-#define reps(i, s, n) for ( int i = (s); i < (int)(n); ++i )
+#include <cstddef>   /* for using size_t */
+
+#define rep(i, n) for ( size_t i = 0; i < (size_t)(n); ++i )
+#define reps(i, s, n) for ( size_t i = (s); i < (size_t)(n); ++i )
