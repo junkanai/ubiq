@@ -1,5 +1,9 @@
 #pragma once
 
+#include <cstddef>   /* for using size_t */
+
+/* the algorithm to generate random numbers is xorshift */
+
 template<class T = double>
 T rnd(T from = -1.0, T to = 1.0) noexcept {
 	static uint32_t x = 123456789;
@@ -25,7 +29,7 @@ T rndi(T to) noexcept {
 	x = y; y = z; z = w;
 	w ^= t ^ (t >> 8) ^ (w >> 19);
 
-	return (T)w % to;
+	return (T)(w % to);
 }
 
 bool rndb(float rate = 0.5) noexcept {
@@ -40,4 +44,3 @@ bool rndb(float rate = 0.5) noexcept {
 
 	return (rate * UINT32_MAX) > w;
 }
-
